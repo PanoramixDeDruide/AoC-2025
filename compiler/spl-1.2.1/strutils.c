@@ -30,7 +30,7 @@ USA.
 
 char *cat2(char *str1, char *str2)
 {
-  int len;
+  long len;
   char *ret;
 
   /* malloc new string */
@@ -91,19 +91,19 @@ char *cat9(char *str1, char *str2, char *str3, char *str4,
 	      cat2(str7, str8), str9);
 }
 
-char *int2str(int i)
+char *long2str(long i)
 {
   char *str;
 
   str = (char *) malloc(25*sizeof(char));
-  sprintf(str, "%d", i);
+  sprintf(str, "%ld", i);
 
   return str;
 }
 
 char *newstr(const char *str)
 {
-  int len;
+  long len;
   char *ret;
 
   /* malloc new string */
@@ -120,7 +120,7 @@ char *space2underscore(char *str)
 {
   char *c;
   for(c = str; *c != '\0'; c++) {
-    if(isspace((int) *c))
+    if(isspace((long) *c))
       *c = '_';
   }
   return str;
@@ -131,8 +131,8 @@ char *singlespace(char *str)
   char *read;
   char *write;
 
-  int last_space = 0;
-  int this_space = 0;
+  long last_space = 0;
+  long this_space = 0;
 
   /* Walk through the string, deleting multiple spaces. */
   for (read = write = str; *read != '\0'; read++) {
@@ -141,7 +141,7 @@ char *singlespace(char *str)
     last_space = this_space;
 
     /* Is this character a space? */
-    this_space = isspace((int) *read);
+    this_space = isspace((long) *read);
 
     /* Copy the character unless this would make more than one space
        in a row. */
@@ -166,7 +166,7 @@ char *str2lower(char *str)
 {
   char *c;
   for (c = str; *c != '\0'; c++) {
-    *c = (char) tolower((int) *c);
+    *c = (char) tolower((long) *c);
   }
   return str;
 }
@@ -175,7 +175,7 @@ char *str2upper(char *str)
 {
   char *c;
   for (c = str; *c != '\0'; c++) {
-    *c = (char) toupper((int) *c);
+    *c = (char) toupper((long) *c);
   }
   return str;
 }
@@ -187,9 +187,9 @@ char *str2varname(char *str)
 
 char *strindent(char *str, char *indent)
 {
-  int newlines, len;
+  long newlines, len;
   char *newstr;
-  int i, j;
+  long i, j;
 
   newlines = 1;
   for (i = 0; str[i] != '\0'; i++) {
@@ -217,9 +217,9 @@ char *strindent(char *str, char *indent)
   return newstr;
 }
 
-char *strpad(char *str, int length, char fill)
+char *strpad(char *str, long length, char fill)
 {
-  int i;
+  long i;
   
   if (strlen(str) >= length) {
     return str;

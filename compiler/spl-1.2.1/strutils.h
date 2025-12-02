@@ -38,7 +38,7 @@ char *cat8(char *str1, char *str2, char *str3, char *str4,
 char *cat9(char *str1, char *str2, char *str3, char *str4,
 	   char *str5, char *str6, char *str7, char *str8,
 	   char *str9);
-char *int2str(int i);
+char *long2str(long i);
 char *newstr(const char *str);
 char *space2underscore(char *str);
 char *singlespace(char *str);
@@ -46,6 +46,6 @@ char *str2lower(char *str);
 char *str2upper(char *str);
 char *str2varname(char *str);
 char *strindent(char *str, char *indent);
-char *strpad(char *str, int length, char fill);
+char *strpad(char *str, long length, char fill);
 
 #endif /* STRUTILS_H */

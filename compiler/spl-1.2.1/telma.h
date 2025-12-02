@@ -27,7 +27,7 @@ USA.
    (telma.h? Read it backwards!)
 */
 
-int yyerror(char *s);
+long yyerror(char *s);
 int yylex(void);
 
 extern int yylineno;

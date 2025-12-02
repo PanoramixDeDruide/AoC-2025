@@ -30,14 +30,14 @@ USA.
 
 typedef struct _STACKNODE STACKNODE;
 struct _STACKNODE {
-  int value;
+  long value;
   STACKNODE *next;
 };
 
 typedef struct {
-  int value;
+  long value;
   char *name;
-  int on_stage;
+  long on_stage;
   STACKNODE *stack;
 } CHARACTER;
 
@@ -47,34 +47,34 @@ extern CHARACTER **cast;
 extern CHARACTER *first_person;
 extern CHARACTER *second_person;
 
-extern int truth_flag;
-extern int num_on_stage;
-extern int num_cast;
+extern long truth_flag;
+extern long num_on_stage;
+extern long num_cast;
 
 /* function prototypes */
-extern void activate_character(int line, CHARACTER *character);
-extern void assign(int line, CHARACTER *character, int value);
-extern void char_input(int line, CHARACTER *character);
-extern void char_output(int line, CHARACTER *character);
-extern void enter_scene(int line, CHARACTER *character);
-extern void exit_scene(int line, CHARACTER *character);
-extern void exit_scene_all(int line);
+extern void activate_character(long line, CHARACTER *character);
+extern void assign(long line, CHARACTER *character, long value);
+extern void char_input(long line, CHARACTER *character);
+extern void char_output(long line, CHARACTER *character);
+extern void enter_scene(long line, CHARACTER *character);
+extern void exit_scene(long line, CHARACTER *character);
+extern void exit_scene_all(long line);
 extern void global_initialize();
 extern CHARACTER *initialize_character(char *name);
-extern int int_add(int line, int a, int b);
-extern int int_cube(int line, int value);
-extern int int_div(int line, int a, int b);
-extern int int_factorial(int line, int n);
-extern void int_input(int line, CHARACTER *character);
-extern int int_mod(int line, int a, int b);
-extern int int_mul(int line, int a, int b);
-extern void int_output(int line, CHARACTER *character);
-extern int int_sqrt(int line, int value);
-extern int int_square(int line, int value);
-extern int int_sub(int line, int a, int b);
-extern int int_twice(int line, int value);
-extern void pop(int line, CHARACTER *character);
-extern void push(int line, CHARACTER *character, int value);
-extern int value_of(int line, CHARACTER *character);
+extern long long_add(long line, long a, long b);
+extern long long_cube(long line, long value);
+extern long long_div(long line, long a, long b);
+extern long long_factorial(long line, long n);
+extern void long_input(long line, CHARACTER *character);
+extern long long_mod(long line, long a, long b);
+extern long long_mul(long line, long a, long b);
+extern void long_output(long line, CHARACTER *character);
+extern long long_sqrt(long line, long value);
+extern long long_square(long line, long value);
+extern long long_sub(long line, long a, long b);
+extern long long_twice(long line, long value);
+extern void pop(long line, CHARACTER *character);
+extern void push(long line, CHARACTER *character, long value);
+extern long value_of(long line, CHARACTER *character);
 
 #endif /* __SHAKESPEARE__ */

@@ -34,15 +34,15 @@ CHARACTER **cast;
 CHARACTER *first_person;
 CHARACTER *second_person;
 
-int truth_flag;
-int num_on_stage;
-int num_cast;
+long truth_flag;
+long num_on_stage;
+long num_cast;
 
 /* debug functions */
 #ifdef DEBUG
 void dump_cast_whereabouts(FILE *out)
 {
-  int i;
+  long i;
 
   for (i = 0; i < num_cast; i++) {
     fprintf(out, "%20s", cast[i]->name);
@@ -67,13 +67,13 @@ void dump_stack(FILE *out, CHARACTER *character)
 
 /* local function prototypes */
 
-static void runtime_error(int line, char *msg);
+static void runtime_error(long line, char *msg);
 
 /* function definitions */
 
-void activate_character(int line, CHARACTER *character)
+void activate_character(long line, CHARACTER *character)
 {
-  int i;
+  long i;
 
   /* Make sure the character is on stage */
   if (character->on_stage == 0) {
@@ -96,7 +96,7 @@ void activate_character(int line, CHARACTER *character)
   first_person = character;
 }
 
-void assign(int line, CHARACTER *character, int value)
+void assign(long line, CHARACTER *character, long value)
 {
   /* Make sure the character isn't NULL */
   if (character == NULL) {
@@ -119,7 +119,7 @@ void assign(int line, CHARACTER *character, int value)
 #endif
 }
 
-void char_input(int line, CHARACTER *character)
+void char_input(long line, CHARACTER *character)
 {
   /* Make sure the character isn't NULL */
   if (character == NULL) {
@@ -143,7 +143,7 @@ void char_input(int line, CHARACTER *character)
 #endif
 }
 
-void char_output(int line, CHARACTER *character)
+void char_output(long line, CHARACTER *character)
 {
   /* Make sure the character isn't NULL */
   if (character == NULL) {
@@ -156,7 +156,7 @@ void char_output(int line, CHARACTER *character)
 
   /* Make sure the value is in range */
   if (character->value < 0 || character->value > UCHAR_MAX) {
-    runtime_error(line, cat3(newstr("The value "), int2str(character->value),
+    runtime_error(line, cat3(newstr("The value "), long2str(character->value),
 			     newstr(" does not correspond to a character.")));
   }
 
@@ -168,7 +168,7 @@ void char_output(int line, CHARACTER *character)
 #endif
 }
 
-void enter_scene(int line, CHARACTER *character)
+void enter_scene(long line, CHARACTER *character)
 {
   /* Make sure the character isn't already on stage */
   if (character->on_stage == 1) {
@@ -187,7 +187,7 @@ void enter_scene(int line, CHARACTER *character)
 #endif
 }
 
-void exit_scene(int line, CHARACTER *character)
+void exit_scene(long line, CHARACTER *character)
 {
   /* Make sure the character is on stage */
   if (character->on_stage == 0) {
@@ -206,9 +206,9 @@ void exit_scene(int line, CHARACTER *character)
 #endif
 }
 
-void exit_scene_all(int line)
+void exit_scene_all(long line)
 {
-  int i;
+  long i;
 
   /* Kick everyone off stage! */
   for (i = 0; i < num_cast; i++) {
@@ -251,51 +251,51 @@ CHARACTER *initialize_character(char *name)
   return newchar;
 }
 
-int int_add(int line, int a, int b)
+long long_add(long line, long a, long b)
 {
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_add(%d, %d) = %d\n", a, b, a + b);
+  fprintf(stderr, "\nComputing long_add(%d, %d) = %d\n", a, b, a + b);
 #endif
 
   /* Compute the result */
   return a + b;
 }
 
-int int_cube(int line, int value)
+long long_cube(long line, long value)
 {
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_cube(%d) = %d\n", value, value*value*value);
+  fprintf(stderr, "\nComputing long_cube(%d) = %d\n", value, value*value*value);
 #endif
   
   return value*value*value;
 }
 
-int int_div(int line, int a, int b)
+long long_div(long line, long a, long b)
 {
   /* Make sure the denominator is nonzero */
   if (b == 0) {
-    runtime_error(line, cat3(newstr("Unable to divide "), int2str(a), newstr(" by zero!")));
+    runtime_error(line, cat3(newstr("Unable to divide "), long2str(a), newstr(" by zero!")));
   }
 
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_div(%d, %d) = %d\n", a, b, a/b);
+  fprintf(stderr, "\nComputing long_div(%d, %d) = %d\n", a, b, a/b);
 #endif
 
   /* Compute the result */
   return a/b;
 }
 
-int int_factorial(int line, int n)
+long long_factorial(long line, long n)
 {
-  int i;
+  long i;
 
 #ifdef DEBUG
-  int orig = n;
+  long orig = n;
 #endif
 
   /* Make sure the argument is nonnegative */
   if (n < 0) {
-    runtime_error(line, cat3(newstr("Unable to compute factorial of "), int2str(n), newstr(", since it is negative!")));
+    runtime_error(line, cat3(newstr("Unable to compute factorial of "), long2str(n), newstr(", since it is negative!")));
   }
   
   /* Compute the result */
@@ -307,13 +307,13 @@ int int_factorial(int line, int n)
   }
 
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_factorial(%d) = %d\n", orig, n);
+  fprintf(stderr, "\nComputing long_factorial(%d) = %d\n", orig, n);
 #endif
 
   return n;
 }
 
-void int_input(int line, CHARACTER *character)
+void long_input(long line, CHARACTER *character)
 {
   char buf[BUF_SIZE];
   long lval;
@@ -348,44 +348,44 @@ void int_input(int line, CHARACTER *character)
   }
 
   /* Make sure it was not out of range */
-  if (lval < INT_MIN || lval > INT_MAX) {
+  if (lval < LONG_MIN || lval > LONG_MAX) {
     runtime_error(line, cat2(newstr(character->name), newstr("'s heart whispered an integer that was out of range.")));
   }
 
   /* Store the value */
-  character->value = (int) lval;
+  character->value = (long) lval;
 
 #ifdef DEBUG
   fprintf(stderr, "\n%s read the value %d\n", character->name, character->value);
 #endif
 }
 
-int int_mod(int line, int a, int b)
+long long_mod(long line, long a, long b)
 {
   /* Make sure the denominator is nonzero */
   if (b == 0) {
-    runtime_error(line, cat3(newstr("Unable to divide "), int2str(a), newstr(" by zero!")));
+    runtime_error(line, cat3(newstr("Unable to divide "), long2str(a), newstr(" by zero!")));
   }
 
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_mod(%d, %d) = %d\n", a, b, a%b);
+  fprintf(stderr, "\nComputing long_mod(%d, %d) = %d\n", a, b, a%b);
 #endif
 
   /* Compute the result */
   return a%b;
 }
 
-int int_mul(int line, int a, int b)
+long long_mul(long line, long a, long b)
 {
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_mul(%d, %d) = %d\n", a, b, a*b);
+  fprintf(stderr, "\nComputing long_mul(%d, %d) = %d\n", a, b, a*b);
 #endif
 
   /* Compute the result */
   return a*b;
 }
 
-void int_output(int line, CHARACTER *character)
+void long_output(long line, CHARACTER *character)
 {
   /* Make sure the character isn't NULL */
   if (character == NULL) {
@@ -397,58 +397,58 @@ void int_output(int line, CHARACTER *character)
   }
 
   /* Write the number to stdout */
-  printf("%d", character->value);
+  printf("%ld", character->value);
 
 #ifdef DEBUG
   fprintf(stderr, "\n%s wrote the value %d\n", character->name, character->value);
 #endif
 }
 
-int int_sqrt(int line, int value)
+long long_sqrt(long line, long value)
 {
   /* Make sure the number is positive */
   if (value < 0) {
-    runtime_error(line, cat3(newstr("Unable to compute the square root of "), int2str(value),
+    runtime_error(line, cat3(newstr("Unable to compute the square root of "), long2str(value),
 			     newstr(", since it is negative.")));
   }
 
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_sqrt(%d) = %d\n", value, (int) sqrt((double) value));
+  fprintf(stderr, "\nComputing long_sqrt(%d) = %d\n", value, (long) sqrt((double) value));
 #endif
 
   /* Compute the square root */
-  return (int) sqrt((double) value);
+  return (long) sqrt((double) value);
 }
 
-int int_square(int line, int value)
+long long_square(long line, long value)
 {
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_square(%d) = %d\n", value, value*value);
+  fprintf(stderr, "\nComputing long_square(%d) = %d\n", value, value*value);
 #endif
   
   return value*value;
 }
 
-int int_sub(int line, int a, int b)
+long long_sub(long line, long a, long b)
 {
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_sub(%d, %d) = %d\n", a, b, a - b);
+  fprintf(stderr, "\nComputing long_sub(%d, %d) = %d\n", a, b, a - b);
 #endif
 
   /* Compute the result */
   return a - b;
 }
 
-int int_twice(int line, int value)
+long long_twice(long line, long value)
 {
 #ifdef DEBUG
-  fprintf(stderr, "\nComputing int_twice(%d) = %d\n", value, 2*value);
+  fprintf(stderr, "\nComputing long_twice(%d) = %d\n", value, 2*value);
 #endif
   
   return 2*value;
 }
 
-void pop(int line, CHARACTER *character)
+void pop(long line, CHARACTER *character)
 {
   STACKNODE *node;
 
@@ -477,7 +477,7 @@ void pop(int line, CHARACTER *character)
 #endif
 }
 
-void push(int line, CHARACTER *character, int value)
+void push(long line, CHARACTER *character, long value)
 {
   STACKNODE *node;
 
@@ -502,14 +502,14 @@ void push(int line, CHARACTER *character, int value)
 #endif
 }
 
-void runtime_error(int line, char *msg)
+void runtime_error(long line, char *msg)
 {
-  fprintf(stderr, "\nRuntime error at line %d: %s\n", line, msg);
+  fprintf(stderr, "\nRuntime error at line %ld: %s\n", line, msg);
   free(msg);
   exit(1);
 }
 
-int value_of(int line, CHARACTER *character)
+long value_of(long line, CHARACTER *character)
 {
   /* Make sure the character isn't NULL */
   if (character == NULL) {
